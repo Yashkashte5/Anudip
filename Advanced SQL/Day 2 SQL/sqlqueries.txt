@@ -1,0 +1,278 @@
+mysql> use acpatil
+Database changed
+mysql> use acpatil;
+Database changed
+mysql> show tables;
++-------------------+
+| Tables_in_acpatil |
++-------------------+
+| employee          |
+| marksheet         |
+| student           |
++-------------------+
+3 rows in set (0.02 sec)
+
+mysql> create table person
+    -> (
+    -> pid int NOT NULL,
+    -> firstname varchar(45),
+    -> lastname varchar(45)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into person values(null,"Yash","Kashte");
+ERROR 1048 (23000): Column 'pid' cannot be null
+mysql> desc person;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| pid       | int         | NO   |     | NULL    |       |
+| firstname | varchar(45) | YES  |     | NULL    |       |
+| lastname  | varchar(45) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into person values(0,"Yash","Kashte");");
+Query OK, 1 row affected (0.00 sec)
+
+    "> ^C
+mysql> insert into person values(1,"Parthivi","Gaikwad");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> alter table employee modify column pid int not null unique;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ' not null unique' at line 1
+mysql> alter table employee
+    -> modify column pid int not null unique;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ' not null unique' at line 2
+mysql> alter table person modify column pid unique;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'unique' at line 1
+mysql> alter table person modify column pid int NOT NULL;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table person modify column pid unique;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'unique' at line 1
+mysql> alter table person modify column pid int unique;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from person;
++------+-----------+----------+
+| pid  | firstname | lastname |
++------+-----------+----------+
+|    0 | Yash      | Kashte   |
+|    1 | Parthivi  | Gaikwad  |
++------+-----------+----------+
+2 rows in set (0.00 sec)
+
+mysql> insert into person values(2,"Ravi","Sharma");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from person;
++------+-----------+----------+
+| pid  | firstname | lastname |
++------+-----------+----------+
+|    0 | Yash      | Kashte   |
+|    1 | Parthivi  | Gaikwad  |
+|    2 | Ravi      | Sharma   |
++------+-----------+----------+
+3 rows in set (0.00 sec)
+
+mysql> insert into person values(2,"Ravi","Sharma");
+ERROR 1062 (23000): Duplicate entry '2' for key 'person.pid'
+mysql> create table teacher
+    -> (
+    -> tid int not null,
+    -> firstname varchar(45) not null,
+    -> age int,
+    -> check(age>=18)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc teacher;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| tid       | int         | NO   |     | NULL    |       |
+| firstname | varchar(45) | NO   |     | NULL    |       |
+| age       | int         | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into teacher values(1,"Ravi",12);
+ERROR 3819 (HY000): Check constraint 'teacher_chk_1' is violated.
+mysql> insert into teacher values(1,"Ravi",18);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from teacher;
++-----+-----------+------+
+| tid | firstname | age  |
++-----+-----------+------+
+|   1 | Ravi      |   18 |
++-----+-----------+------+
+1 row in set (0.00 sec)
+
+mysql> insert into teacher values(2,"Rajat",21);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from teacher;
++-----+-----------+------+
+| tid | firstname | age  |
++-----+-----------+------+
+|   1 | Ravi      |   18 |
+|   2 | Rajat     |   21 |
++-----+-----------+------+
+2 rows in set (0.00 sec)
+
+mysql> alter table teacher
+    -> Add check(id>0);
+ERROR 1054 (42S22): Unknown column 'id' in 'check constraint teacher_chk_2 expression'
+mysql> alter table teacher
+    -> Add check(tid>0);
+Query OK, 2 rows affected (0.02 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> insert into teacher values(0,"Harsh",28);
+ERROR 3819 (HY000): Check constraint 'teacher_chk_2' is violated.
+mysql> alter table teacher
+    -> add column city varchar(45) default 'Mumbai';
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into teacher (tid, firstname, age) values (3,"Rajesh",19);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from teacher;
++-----+-----------+------+--------+
+| tid | firstname | age  | city   |
++-----+-----------+------+--------+
+|   1 | Ravi      |   18 | Mumbai |
+|   2 | Rajat     |   21 | Mumbai |
+|   3 | Rajesh    |   19 | Mumbai |
++-----+-----------+------+--------+
+3 rows in set (0.01 sec)
+
+mysql> CREATE TABLE Sales (
+    ->     sale_id INT PRIMARY KEY,
+    ->     product_id INT,
+    ->     quantity_sold INT,
+    ->     sale_date DATE,
+    ->     total_price DECIMAL(10, 2)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc sales;
++---------------+---------------+------+-----+---------+-------+
+| Field         | Type          | Null | Key | Default | Extra |
++---------------+---------------+------+-----+---------+-------+
+| sale_id       | int           | NO   | PRI | NULL    |       |
+| product_id    | int           | YES  |     | NULL    |       |
+| quantity_sold | int           | YES  |     | NULL    |       |
+| sale_date     | date          | YES  |     | NULL    |       |
+| total_price   | decimal(10,2) | YES  |     | NULL    |       |
++---------------+---------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> insert into Sales (sale_id, product_id, quantity_sold, sale_date, total_price) values
+    -> (1, 201, 5, '2024-06-01', 159.99),
+    -> (2, 202, 3, '2024-06-02', 123.45),
+    -> (3, 203, 6, '2024-06-03', 189.50),
+    -> (4, 204, 4, '2024-06-04', 245.75),
+    -> (5, 205, 2, '2024-06-05', 132.00),
+    -> (6, 206, 1, '2024-06-06', 105.99),
+    -> (7, 207, 7, '2024-06-07', 210.25),
+    -> (8, 208, 5, '2024-06-08', 157.30),
+    -> (9, 209, 3, '2024-06-09', 141.75),
+    -> (10, 210, 8, '2024-06-10', 299.99);
+Query OK, 10 rows affected (0.01 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> select * from sales;
++---------+------------+---------------+------------+-------------+
+| sale_id | product_id | quantity_sold | sale_date  | total_price |
++---------+------------+---------------+------------+-------------+
+|       1 |        201 |             5 | 2024-06-01 |      159.99 |
+|       2 |        202 |             3 | 2024-06-02 |      123.45 |
+|       3 |        203 |             6 | 2024-06-03 |      189.50 |
+|       4 |        204 |             4 | 2024-06-04 |      245.75 |
+|       5 |        205 |             2 | 2024-06-05 |      132.00 |
+|       6 |        206 |             1 | 2024-06-06 |      105.99 |
+|       7 |        207 |             7 | 2024-06-07 |      210.25 |
+|       8 |        208 |             5 | 2024-06-08 |      157.30 |
+|       9 |        209 |             3 | 2024-06-09 |      141.75 |
+|      10 |        210 |             8 | 2024-06-10 |      299.99 |
++---------+------------+---------------+------------+-------------+
+10 rows in set (0.00 sec)
+
+mysql> create table ProductData (
+    -> product_id int primary key,
+    -> product_name int not null,
+    -> category varchar(256),
+    -> unit_price int
+    -> check (unit_price<200)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> alter table ProductData
+    -> modify product_name varchar(265) not null;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+mysql> insert into ProductData
+    -> values (101, "A", "Books",122)
+    -> ;
+Query OK, 1 row affected (0.01 sec)
+mysql> select * from Productdata;
++------------+--------------+----------+------------+
+| product_id | product_name | category | unit_price |
++------------+--------------+----------+------------+
+|        101 | A            | Books    |        122 |
++------------+--------------+----------+------------+
+1 row in set (0.00 sec)
+mysql> select * from employee;
++----------+-------+-------------+--------+--------+
+| empname  | empid | contact     | salary | city   |
++----------+-------+-------------+--------+--------+
+| Yash     |     0 | 98982650547 | 100000 | Panvel |
+| Parthivi |     1 |  9702882408 | 120000 | Thane  |
+| Sneha    |     2 |  9123456789 | 110000 | NULL   |
+| Amit     |     3 |  9988776655 | 105000 | NULL   |
+| Priya    |     4 |  9876123456 |  95000 | NULL   |
+| Rohit    |     5 |  9123678945 | 115000 | NULL   |
+| Anjali   |     6 |  9986543210 | 125000 | NULL   |
+| Vijay    |     7 |  9876123450 | 102000 | NULL   |
+| Kiran    |     8 |  9123456780 | 108000 | NULL   |
+| Meera    |     9 |  9988776654 |  97000 | NULL   |
++----------+-------+-------------+--------+--------+
+10 rows in set (0.00 sec)
+
+mysql> select max(salary) from employee;
++-------------+
+| max(salary) |
++-------------+
+|      125000 |
++-------------+
+1 row in set (0.01 sec)
+
+mysql> select min(salary) from employee;
++-------------+
+| min(salary) |
++-------------+
+|       95000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select avg(salary) from employee;
++-------------+
+| avg(salary) |
++-------------+
+| 107700.0000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT COUNT(empid) AS ID FROM employee;
++----+
+| ID |
++----+
+| 10 |
++----+
+1 row in set (0.00 sec)
