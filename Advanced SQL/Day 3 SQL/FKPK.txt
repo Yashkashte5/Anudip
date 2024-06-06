@@ -1,0 +1,313 @@
+mysql> use acpatil;
+Database changed
+mysql> create table studentInfo
+    -> (
+    -> Roll_No int primary key,
+    -> StudentName varchar(45),
+    -> course varchar(45)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> create table marksheet
+    -> (
+    -> Marksheet_id int primary key,
+    -> Total int,
+    -> rollno int,
+    -> foreign key(rollno) references studentInfo(Roll_No)
+    -> );
+ERROR 1050 (42S01): Table 'marksheet' already exists
+mysql> droptable marksheet;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'droptable marksheet' at line 1
+mysql> drop table marksheet;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create table marksheet
+    -> (
+    -> Marksheet_id int primary key,
+    -> Total int,
+    -> rollno int,
+    -> foreign key(rollno) references studentInfo(Roll_No)
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create table scorecard
+    -> (
+    -> Marksheet_id primary key,
+    -> Total int,
+    -> rollno int,
+    -> foreign key(rollno) references studentInfo(Roll_No)
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'primary key,
+Total int,
+rollno int,
+foreign key(rollno) references studentInfo(R' at line 3
+mysql> list tables;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'list tables' at line 1
+mysql> insert into studentinfo values(28,"Yash","BEAIDS");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into studentinfo values(18,"Parthivi","BECOMPS");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into studentinfo values(38,"Pragati","BEIT");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into studentinfo values(33,"Parth","BEIOT");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into marksheet values(1,300,28);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into marksheet values(2,320,18);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into marksheet values(3,280,38);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into marksheet values(4,290,33);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from marksheet;
++--------------+-------+--------+
+| Marksheet_id | Total | rollno |
++--------------+-------+--------+
+|            1 |   300 |     28 |
+|            2 |   320 |     18 |
+|            3 |   280 |     38 |
+|            4 |   290 |     33 |
++--------------+-------+--------+
+4 rows in set (0.00 sec)
+
+mysql> create table customers
+    -> (
+    -> custid int,
+    -> custname varchar(45),
+    -> custaddress varchar(45)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into customers values(1,"Yash","Panvel");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into customers values(2,"Ravi","Thane");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into customers values(3,"Rajesh","Mumbai");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> list table;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'list table' at line 1
+mysql> list tables;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'list tables' at line 1
+mysql> show tables;
++-------------------+
+| Tables_in_acpatil |
++-------------------+
+| customers         |
+| employee          |
+| marksheet         |
+| person            |
+| productdata       |
+| sales             |
+| student           |
+| studentinfo       |
+| teacher           |
++-------------------+
+9 rows in set (0.00 sec)
+
+mysql> create table product
+    -> (
+    -> productid int,
+    -> productname varchar(45),
+    -> price int,
+    -> custid int,
+    -> foreign key(custid) references customers(custid)
+    -> );
+ERROR 1822 (HY000): Failed to add the foreign key constraint. Missing index for constraint 'product_ibfk_1' in the referenced table 'customers'
+mysql> drop table customers;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> create table customers
+    -> (
+    -> custid primary key,
+    -> custname varchar(45),
+    -> custaddress varchar(45)
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'primary key,
+custname varchar(45),
+custaddress varchar(45)
+)' at line 3
+mysql> drop table product;
+ERROR 1051 (42S02): Unknown table 'acpatil.product'
+mysql> create table customers
+    -> (
+    -> custid int primary key,
+    -> custname varchar(45),
+    -> custaddress varchar(45)
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> insert into customers values(1,"Yash","Panvel");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into customers values(2,"Ravi","Thane");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into customers values(3,"Rajesh","Mumbai");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> create table product
+    -> (
+    -> productid int primary key,
+    -> productname varchar(45),
+    -> price int,
+    -> custid int,
+    -> foreign key(custid) references customers(custid)
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> insert into product values(101, "Laptop", 60000, 1);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into product values(102, "Smartphone", 20000, 2);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into product values(103, "Tablet", 30000, 3);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from product;
++-----------+-------------+-------+--------+
+| productid | productname | price | custid |
++-----------+-------------+-------+--------+
+|       101 | Laptop      | 60000 |      1 |
+|       102 | Smartphone  | 20000 |      2 |
+|       103 | Tablet      | 30000 |      3 |
++-----------+-------------+-------+--------+
+3 rows in set (0.00 sec)
+
+mysql> create table productInfo
+    -> (
+    -> prodid int,
+    -> prodname varchar(4)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table category
+    -> (
+    -> categoryid int,
+    -> category varchar(45),
+    -> pid int,
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 6
+mysql> create table category
+    -> (
+    -> categoryid int,
+    -> category varchar(45),
+    -> pid int
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> drop table category;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> create table category
+    -> (
+    -> cid int,
+    -> category varchar(45),
+    -> pid int,
+    -> foreign key(pid) references productInfo(prodid)
+    -> );
+ERROR 1822 (HY000): Failed to add the foreign key constraint. Missing index for constraint 'category_ibfk_1' in the referenced table 'productinfo'
+mysql> droptable category;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'droptable category' at line 1
+mysql> drop table category;
+ERROR 1051 (42S02): Unknown table 'acpatil.category'
+mysql> drop table product;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create table Customers
+    -> (
+    -> custId int primary key,
+    -> Name varchar (256),
+    -> Address varchar (256)
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ' varchar (256)
+)' at line 5
+mysql>
+mysql> create  table product
+    -> (
+    -> productid int primary key,
+    -> productname varchar(256) ,
+    -> price int ,
+    -> cust_ID int,
+    -> foreign key (cust_ID) references Customers (custId)
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ' (custId)
+)' at line 7
+mysql> create table Customers
+    -> (
+    -> custId int primary key,
+    -> Name varchar(256),
+    -> Address varchar(256)
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ' varchar(256)
+)' at line 5
+mysql>
+mysql> create  table product
+    -> (
+    -> productid int primary key,
+    -> productname varchar(256) ,
+    -> price int ,
+    -> cust_ID int,
+    -> foreign key(cust_ID) references Customers(custId)
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create table Customers
+    -> (
+    -> custId int primary key,
+    -> Name varchar(45),
+    -> Address varchar(45)
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ' varchar(45)
+)' at line 5
+mysql>
+mysql> create  table product
+    -> (
+    -> productid int primary key,
+    -> productname varchar(45) ,
+    -> price int ,
+    -> cust_ID int,
+    -> foreign key(cust_ID) references Customers(custId)
+    -> );
+ERROR 1050 (42S01): Table 'product' already exists
+mysql> CREATE TABLE Customers (
+    ->     custId INT PRIMARY KEY,
+    ->     Name VARCHAR(45),
+    ->     Address VARCHAR(45),
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 5
+mysql> CREATE TABLE Customers
+    -> (
+    -> custId INT PRIMARY KEY,
+    -> Name VARCHAR(45),
+    -> Address VARCHAR(45),
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 6
+mysql> CREATE TABLE Customers
+    -> (
+    -> Name VARCHAR(45),
+    -> Address VARCHAR(45)
+    -> );
+ERROR 1050 (42S01): Table 'customers' already exists
+mysql> drop table customers;
+ERROR 3730 (HY000): Cannot drop table 'customers' referenced by a foreign key constraint 'product_ibfk_1' on table 'product'.
+mysql> desc customers;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| custid      | int         | NO   | PRI | NULL    |       |
+| custname    | varchar(45) | YES  |     | NULL    |       |
+| custaddress | varchar(45) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
