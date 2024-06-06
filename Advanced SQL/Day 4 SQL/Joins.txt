@@ -1,0 +1,153 @@
+mysql> use acpatil;
+Database changed
+mysql> show tables;
++-------------------+
+| Tables_in_acpatil |
++-------------------+
+| customers         |
+| employee          |
+| marksheet         |
+| person            |
+| product           |
+| productdata       |
+| productinfo       |
+| sales             |
+| student           |
+| studentinfo       |
+| teacher           |
++-------------------+
+11 rows in set (0.02 sec)
+
+mysql> create table employees
+    -> (
+    -> id int,
+    -> emp_name varchar(50),
+    -> salary int,
+    -> dept_id int,
+    -> manager_id int
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> inset into employees values(1,"Ravi",53532,1,1),
+    -> (2,"Rajesh",72347,4,4),
+    -> (3,"Rahul",89742,4,4),
+    -> (4,"Rajat",89724,5,5);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'inset into employees values(1,"Ravi",53532,1,1),
+(2,"Rajesh",72347,4,4),
+(3,"Rah' at line 1
+mysql> insert into employees values(1,"Ravi",53532,1,1),
+    -> (2,"Rajesh",72347,4,4),
+    -> (3,"Rahul",89742,4,4),
+    -> (4,"Rajat",89724,5,5);
+Query OK, 4 rows affected (0.00 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> insert into employees values(5,"Samir",53532,4,2),
+    -> (6,"Sachin",98491,4,1);
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from employees;
++------+----------+--------+---------+------------+
+| id   | emp_name | salary | dept_id | manager_id |
++------+----------+--------+---------+------------+
+|    1 | Ravi     |  53532 |       1 |          1 |
+|    2 | Rajesh   |  72347 |       4 |          4 |
+|    3 | Rahul    |  89742 |       4 |          4 |
+|    4 | Rajat    |  89724 |       5 |          5 |
+|    5 | Samir    |  53532 |       4 |          2 |
+|    6 | Sachin   |  98491 |       4 |          1 |
++------+----------+--------+---------+------------+
+6 rows in set (0.00 sec)
+
+mysql> create table departments
+    -> (
+    -> id int,
+    -> dept_name varchar(45)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into department values(1,"Engineering"),
+    -> (2,"Marketing"),
+    -> (2,"IT"),
+    -> ^C
+mysql> insert into department values(1,"Engineering"),
+    -> (2,"Marketing"),
+    -> (3,"IT"),
+    -> (4,"Accounts"),
+    -> (5,"Transport");
+ERROR 1146 (42S02): Table 'acpatil.department' doesn't exist
+mysql> insert into departments values(1,"Engineering"),
+    -> (2,"Marketing"),
+    -> (3,"IT"),
+    -> (4,"Accounts"),
+    -> (5,"Transport");
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select employees.emp_name,employees.salary,departments.dep_name
+    -> from employees
+    -> inner join departments on
+    -> employees.id=departments.id;
+ERROR 1054 (42S22): Unknown column 'departments.dep_name' in 'field list'
+mysql> select employees.emp_name,employees.salary,departments.dept_name
+    -> from employees
+    -> inner join departments on
+    -> employees.id=departments.id;
++----------+--------+-------------+
+| emp_name | salary | dept_name   |
++----------+--------+-------------+
+| Ravi     |  53532 | Engineering |
+| Rajesh   |  72347 | Marketing   |
+| Rahul    |  89742 | IT          |
+| Rajat    |  89724 | Accounts    |
+| Samir    |  53532 | Transport   |
++----------+--------+-------------+
+5 rows in set (0.01 sec)
+
+mysql> select employees.emp_name,employees.salary,departments.dept_name
+    -> from employees
+    -> left join departments on
+    -> employees.id=departments.id;
++----------+--------+-------------+
+| emp_name | salary | dept_name   |
++----------+--------+-------------+
+| Ravi     |  53532 | Engineering |
+| Rajesh   |  72347 | Marketing   |
+| Rahul    |  89742 | IT          |
+| Rajat    |  89724 | Accounts    |
+| Samir    |  53532 | Transport   |
+| Sachin   |  98491 | NULL        |
++----------+--------+-------------+
+6 rows in set (0.00 sec)
+
+mysql> select employees.emp_name,employees.salary,departments.dept_name
+    -> from employees
+    -> right join departments on
+    -> employees.id=departments.id;
++----------+--------+-------------+
+| emp_name | salary | dept_name   |
++----------+--------+-------------+
+| Ravi     |  53532 | Engineering |
+| Rajesh   |  72347 | Marketing   |
+| Rahul    |  89742 | IT          |
+| Rajat    |  89724 | Accounts    |
+| Samir    |  53532 | Transport   |
++----------+--------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> create table manager
+    -> (
+    -> mid int,
+    -> mname varchar(45),
+    -> dept_id int
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create table projects
+    -> (
+    -> p_id int,
+    -> project_name varchar(45),
+    -> emp_id int
+    -> );
+Query OK, 0 rows affected (0.01 sec)
