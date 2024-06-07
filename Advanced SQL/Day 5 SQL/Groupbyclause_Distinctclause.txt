@@ -1,0 +1,363 @@
+mysql> use acpatil;
+Database changed
+mysql> create table students
+    -> (
+    -> roll_no int,
+    -> name varchar(45),
+    -> address varchar(100),
+    -> phone varchar(20),
+    -> age int
+    -> );
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> create table studentdb
+    -> (
+    -> roll_no int,
+    -> name varchar(50),
+    -> address varchar(100),
+    -> phone varchar(20),
+    -> age int
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> alter table studentdb modify roll_no int primary key;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc studentdb;
++---------+--------------+------+-----+---------+-------+
+| Field   | Type         | Null | Key | Default | Extra |
++---------+--------------+------+-----+---------+-------+
+| roll_no | int          | NO   | PRI | NULL    |       |
+| name    | varchar(50)  | YES  |     | NULL    |       |
+| address | varchar(100) | YES  |     | NULL    |       |
+| phone   | varchar(20)  | YES  |     | NULL    |       |
+| age     | int          | YES  |     | NULL    |       |
++---------+--------------+------+-----+---------+-------+
+5 rows in set (0.04 sec)
+
+mysql> alter table studentdb modify phone bigint;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into studentdb values(5,"Ravi","Kalyan",4128882410,21),
+    -> (7,"Rajat","Thane",8982495247,21).
+    -> (7,"Rajat","Thane",8982495247,21),
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '.
+(7,"Rajat","Thane",8982495247,21),' at line 2
+mysql> insert into studentdb values(5,"Ravi","Kalyan",4128882410,21),
+    -> (7,"Rajat","Thane",8982495247,21).
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '.' at line 2
+mysql> insert into studentdb values(5,"Ravi","Kalyan",4128882410,21),
+    -> (7,"Rajat","Thane",8982495247,21),
+    -> (8,"Harsh","Dadar",9898351865,21);
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> insert studentdb values (9, "Amit", "Bandra", 9812345678, 22),
+    -> (10, "Priya", "Vashi", 9823456789, 20),
+    -> (11, "Neha", "Pune", 9834567890, 23),
+    -> (12, "Vikas", "Navi Mumbai", 9845678901, 21),
+    -> (13, "Rina", "Andheri", 9856789012, 22),
+    -> (14, "Sanjay", "Borivali", 9867890123, 21),
+    -> (15, "Anita", "Kharghar", 9878901234, 20);
+Query OK, 7 rows affected (0.00 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+mysql> select * from studentdb;
++---------+--------+-------------+------------+------+
+| roll_no | name   | address     | phone      | age  |
++---------+--------+-------------+------------+------+
+|       5 | Ravi   | Kalyan      | 4128882410 |   21 |
+|       7 | Rajat  | Thane       | 8982495247 |   21 |
+|       8 | Harsh  | Dadar       | 9898351865 |   21 |
+|       9 | Amit   | Bandra      | 9812345678 |   22 |
+|      10 | Priya  | Vashi       | 9823456789 |   20 |
+|      11 | Neha   | Pune        | 9834567890 |   23 |
+|      12 | Vikas  | Navi Mumbai | 9845678901 |   21 |
+|      13 | Rina   | Andheri     | 9856789012 |   22 |
+|      14 | Sanjay | Borivali    | 9867890123 |   21 |
+|      15 | Anita  | Kharghar    | 9878901234 |   20 |
++---------+--------+-------------+------------+------+
+10 rows in set (0.00 sec)
+
+mysql> select * from studentdb
+    -> ORDER by name DESC;
++---------+--------+-------------+------------+------+
+| roll_no | name   | address     | phone      | age  |
++---------+--------+-------------+------------+------+
+|      12 | Vikas  | Navi Mumbai | 9845678901 |   21 |
+|      14 | Sanjay | Borivali    | 9867890123 |   21 |
+|      13 | Rina   | Andheri     | 9856789012 |   22 |
+|       5 | Ravi   | Kalyan      | 4128882410 |   21 |
+|       7 | Rajat  | Thane       | 8982495247 |   21 |
+|      10 | Priya  | Vashi       | 9823456789 |   20 |
+|      11 | Neha   | Pune        | 9834567890 |   23 |
+|       8 | Harsh  | Dadar       | 9898351865 |   21 |
+|      15 | Anita  | Kharghar    | 9878901234 |   20 |
+|       9 | Amit   | Bandra      | 9812345678 |   22 |
++---------+--------+-------------+------------+------+
+10 rows in set (0.01 sec)
+
+mysql> select * from studentdb
+    -> ORDER by name ASC;
++---------+--------+-------------+------------+------+
+| roll_no | name   | address     | phone      | age  |
++---------+--------+-------------+------------+------+
+|       9 | Amit   | Bandra      | 9812345678 |   22 |
+|      15 | Anita  | Kharghar    | 9878901234 |   20 |
+|       8 | Harsh  | Dadar       | 9898351865 |   21 |
+|      11 | Neha   | Pune        | 9834567890 |   23 |
+|      10 | Priya  | Vashi       | 9823456789 |   20 |
+|       7 | Rajat  | Thane       | 8982495247 |   21 |
+|       5 | Ravi   | Kalyan      | 4128882410 |   21 |
+|      13 | Rina   | Andheri     | 9856789012 |   22 |
+|      14 | Sanjay | Borivali    | 9867890123 |   21 |
+|      12 | Vikas  | Navi Mumbai | 9845678901 |   21 |
++---------+--------+-------------+------------+------+
+10 rows in set (0.00 sec)
+
+mysql> create table bookinfo
+    -> (
+    -> auth_firstname varchar(45),
+    -> auth_lastname varchar(45),
+    -> bookname varchar(45)
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> insert into bookinfo values ('Tom', 'Doe', 'Hope'),
+    -> ('Ann', 'Lee', 'Star'),
+    -> ('Max', 'Ray', 'Echo'),
+    -> ('Eva', 'Kim', 'Moon'),
+    -> ('Joe', 'Nash', 'Fire'),
+    -> ('Amy', 'Fox', 'Rain'),
+    -> ('Ben', 'Yao', 'Wave'),
+    -> ('Liz', 'Kai', 'Dust'),
+    -> ('Ian', 'Roy', 'Fate'),
+    -> ('Mia', 'Jin', 'Wish');
+Query OK, 10 rows affected (0.00 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> delete * from bookinfo;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '* from bookinfo' at line 1
+mysql> delete from bookinfo;
+Query OK, 10 rows affected (0.00 sec)
+
+mysql> insert into bookinfo values ("George", "Orwell", "1984"),
+    -> ("Harper", "Lee", "To Kill a Mockingbird"),
+    -> ("F. Scott", "Fitzgerald", "The Great Gatsby"),
+    -> ("Jane", "Austen", "Pride and Prejudice"),
+    -> ("Mark", "Twain", "Adventures of Huckleberry Finn"),
+    -> ("J.K.", "Rowling", "Harry Potter and the Philosopher's Stone"),
+    -> ("J.R.R.", "Tolkien", "The Lord of the Rings"),
+    -> ("Agatha", "Christie", "Murder on the Orient Express"),
+    -> ("Leo", "Tolstoy", "War and Peace"),
+    -> ("Mary", "Shelley", "Frankenstein");
+Query OK, 10 rows affected (0.00 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> select * from bookinfo;
++----------------+---------------+------------------------------------------+
+| auth_firstname | auth_lastname | bookname                                 |
++----------------+---------------+------------------------------------------+
+| George         | Orwell        | 1984                                     |
+| Harper         | Lee           | To Kill a Mockingbird                    |
+| F. Scott       | Fitzgerald    | The Great Gatsby                         |
+| Jane           | Austen        | Pride and Prejudice                      |
+| Mark           | Twain         | Adventures of Huckleberry Finn           |
+| J.K.           | Rowling       | Harry Potter and the Philosopher's Stone |
+| J.R.R.         | Tolkien       | The Lord of the Rings                    |
+| Agatha         | Christie      | Murder on the Orient Express             |
+| Leo            | Tolstoy       | War and Peace                            |
+| Mary           | Shelley       | Frankenstein                             |
++----------------+---------------+------------------------------------------+
+10 rows in set (0.00 sec)
+
+mysql> select distinct auth_firstname, auth_lastname
+    -> from bookinfo;
++----------------+---------------+
+| auth_firstname | auth_lastname |
++----------------+---------------+
+| George         | Orwell        |
+| Harper         | Lee           |
+| F. Scott       | Fitzgerald    |
+| Jane           | Austen        |
+| Mark           | Twain         |
+| J.K.           | Rowling       |
+| J.R.R.         | Tolkien       |
+| Agatha         | Christie      |
+| Leo            | Tolstoy       |
+| Mary           | Shelley       |
++----------------+---------------+
+10 rows in set (0.00 sec)
+
+mysql> select count(distinct(bookname)) from bookinfo;
++---------------------------+
+| count(distinct(bookname)) |
++---------------------------+
+|                        10 |
++---------------------------+
+1 row in set (0.01 sec)
+
+mysql> create table sales
+    -> (
+    -> sales_id int primary key,
+    -> salesperson_name varchar(45),
+    -> age int,
+    -> sales_amount int
+    -> );
+ERROR 1050 (42S01): Table 'sales' already exists
+mysql> create table salesinfo
+    -> (
+    -> sales_id int primary key,
+    -> salesperson_name varchar(45),
+    -> age int,
+    -> sales_amount int
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into salesinfo values (1, 'Ravi Kumar', 30, 500000),
+    -> (2, 'Aarti Sharma', 28, 700000),
+    -> (3, 'Suresh Patel', 35, 300000),
+    -> (4, 'Priya Singh', 32, 400000),
+    -> (5, 'Amit Gupta', 40, 600000),
+    -> (6, 'Neha Verma', 27, 450000),
+    -> (7, 'Rajesh Iyer', 29, 350000),
+    -> (8, 'Sneha Reddy', 34, 750000),
+    -> (9, 'Vikram Mehta', 38, 800000),
+    -> (10, 'Anjali Nair', 31, 550000);
+Query OK, 10 rows affected (0.01 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> select * from salesinfo;
++----------+------------------+------+--------------+
+| sales_id | salesperson_name | age  | sales_amount |
++----------+------------------+------+--------------+
+|        1 | Ravi Kumar       |   30 |       500000 |
+|        2 | Aarti Sharma     |   28 |       700000 |
+|        3 | Suresh Patel     |   35 |       300000 |
+|        4 | Priya Singh      |   32 |       400000 |
+|        5 | Amit Gupta       |   40 |       600000 |
+|        6 | Neha Verma       |   27 |       450000 |
+|        7 | Rajesh Iyer      |   29 |       350000 |
+|        8 | Sneha Reddy      |   34 |       750000 |
+|        9 | Vikram Mehta     |   38 |       800000 |
+|       10 | Anjali Nair      |   31 |       550000 |
++----------+------------------+------+--------------+
+10 rows in set (0.00 sec)
+
+mysql> select salesperson_name,sum(sales_amount) from salesinfo GROUP by salesperson_name;
++------------------+-------------------+
+| salesperson_name | sum(sales_amount) |
++------------------+-------------------+
+| Ravi Kumar       |            500000 |
+| Aarti Sharma     |            700000 |
+| Suresh Patel     |            300000 |
+| Priya Singh      |            400000 |
+| Amit Gupta       |            600000 |
+| Neha Verma       |            450000 |
+| Rajesh Iyer      |            350000 |
+| Sneha Reddy      |            750000 |
+| Vikram Mehta     |            800000 |
+| Anjali Nair      |            550000 |
++------------------+-------------------+
+10 rows in set (0.00 sec)
+
+mysql> delete from salesinfo;
+Query OK, 10 rows affected (0.00 sec)
+
+mysql> insert into salesinfo values (1, 'Ravi Kumar', 30, 500000),
+    -> (2, 'Aarti Sharma', 28, 700000),
+    -> (3, 'Suresh Patel', 35, 300000),
+    -> (4, 'Priya Singh', 32, 400000),
+    -> (5, 'Amit Gupta', 40, 600000),
+    -> (6, 'Neha Verma', 27, 450000),
+    -> (7, 'Rajesh Iyer', 29, 350000),
+    -> (8, 'Sneha Reddy', 34, 750000),
+    -> (9, 'Vikram Mehta', 38, 800000),
+    -> (10, 'Anjali Nair', 31, 550000),
+    -> (11, 'Ravi Kumar', 30, 500000),
+    -> (12, 'Neha Verma', 27, 450000);
+Query OK, 12 rows affected (0.01 sec)
+Records: 12  Duplicates: 0  Warnings: 0
+
+mysql> select salesperson_name,sum(sales_amount) from salesinfo GROUP by salesperson_name;
++------------------+-------------------+
+| salesperson_name | sum(sales_amount) |
++------------------+-------------------+
+| Ravi Kumar       |           1000000 |
+| Aarti Sharma     |            700000 |
+| Suresh Patel     |            300000 |
+| Priya Singh      |            400000 |
+| Amit Gupta       |            600000 |
+| Neha Verma       |            900000 |
+| Rajesh Iyer      |            350000 |
+| Sneha Reddy      |            750000 |
+| Vikram Mehta     |            800000 |
+| Anjali Nair      |            550000 |
++------------------+-------------------+
+10 rows in set (0.00 sec)
+
+mysql> select * from salesinfo;
++----------+------------------+------+--------------+
+| sales_id | salesperson_name | age  | sales_amount |
++----------+------------------+------+--------------+
+|        1 | Ravi Kumar       |   30 |       500000 |
+|        2 | Aarti Sharma     |   28 |       700000 |
+|        3 | Suresh Patel     |   35 |       300000 |
+|        4 | Priya Singh      |   32 |       400000 |
+|        5 | Amit Gupta       |   40 |       600000 |
+|        6 | Neha Verma       |   27 |       450000 |
+|        7 | Rajesh Iyer      |   29 |       350000 |
+|        8 | Sneha Reddy      |   34 |       750000 |
+|        9 | Vikram Mehta     |   38 |       800000 |
+|       10 | Anjali Nair      |   31 |       550000 |
+|       11 | Ravi Kumar       |   30 |       500000 |
+|       12 | Neha Verma       |   27 |       450000 |
++----------+------------------+------+--------------+
+12 rows in set (0.00 sec)
+
+mysql> Create table student_score
+    -> (
+    -> Student_ID INt PRIMARY KEY,
+    -> Student_Name VArchar(256),
+    -> Percentage int,
+    -> Grade varchar(256)
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> insert into student_score values (1, 'Alice', 85, 'A'),
+    -> (2, 'Bob', 72, 'B'),
+    -> (3, 'Charlie', 91, 'A'),
+    -> (4, 'David', 65, 'C'),
+    -> (5, 'Eve', 78, 'B'),
+    -> (6, 'Fiona', 94, 'A'),
+    -> (7, 'George', 82, 'B'),
+    -> (8, 'Helen', 69, 'C'),
+    -> (9, 'Ivan', 75, 'C'),
+    -> (10, 'Jack', 88, 'A');
+Query OK, 10 rows affected (0.00 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> select * from student_score;
++------------+--------------+------------+-------+
+| Student_ID | Student_Name | Percentage | Grade |
++------------+--------------+------------+-------+
+|          1 | Alice        |         85 | A     |
+|          2 | Bob          |         72 | B     |
+|          3 | Charlie      |         91 | A     |
+|          4 | David        |         65 | C     |
+|          5 | Eve          |         78 | B     |
+|          6 | Fiona        |         94 | A     |
+|          7 | George       |         82 | B     |
+|          8 | Helen        |         69 | C     |
+|          9 | Ivan         |         75 | C     |
+|         10 | Jack         |         88 | A     |
++------------+--------------+------------+-------+
+10 rows in set (0.00 sec)
+
+mysql> select grade,count(studentid) As Number_of_students
+    -> from student_score
+    -> group by grade;
